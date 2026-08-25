@@ -35,6 +35,11 @@ class Accord extends Model
             ->withTimestamps();
     }
 
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     public function scopeActive(Builder $query): void
     {
         $query->where('is_active', true);

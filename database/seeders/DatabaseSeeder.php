@@ -11,6 +11,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             ParfumDemoSeeder::class,
             RecommendationSeeder::class,
+            AdminUserSeeder::class,
         ]);
     }
 }

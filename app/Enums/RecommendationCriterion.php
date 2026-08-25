@@ -4,7 +4,12 @@ namespace App\Enums;
 
 enum RecommendationCriterion: string
 {
-    case Occasion = 'occasion'; case Climate = 'climate'; case Accord = 'accord'; case Duration = 'duration'; case Projection = 'projection'; case Intensity = 'intensity';
+    case Occasion = 'occasion';
+    case Climate = 'climate';
+    case Accord = 'accord';
+    case Duration = 'duration';
+    case Projection = 'projection';
+    case Intensity = 'intensity';
 
     public function label(): string
     {

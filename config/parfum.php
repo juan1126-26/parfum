@@ -1,6 +1,27 @@
 <?php
 
 return [
+    'admin' => [
+        'name' => env('ADMIN_NAME', 'Administrador  Parfum'),
+        'email' => env('ADMIN_EMAIL', 'admin@parfum.local'),
+        'password' => env('ADMIN_PASSWORD', 'password'),
+        'navigation' => [
+            ['key' => 'dashboard', 'label' => 'Dashboard', 'route' => 'admin.dashboard'],
+            ['key' => 'perfumes', 'label' => 'Perfumes', 'route' => 'admin.perfumes.index'],
+            ['key' => 'brands', 'label' => 'Marcas', 'route' => 'admin.brands.index'],
+            ['key' => 'categories', 'label' => 'Categorias', 'route' => 'admin.categories.index'],
+            ['key' => 'accords', 'label' => 'Acordes', 'route' => 'admin.accords.index'],
+            ['key' => 'notes', 'label' => 'Notas', 'route' => 'admin.notes.index'],
+            ['key' => 'climates', 'label' => 'Climas', 'route' => 'admin.climates.index'],
+            ['key' => 'seasons', 'label' => 'Temporadas', 'route' => 'admin.seasons.index'],
+            ['key' => 'occasions', 'label' => 'Ocasiones', 'route' => 'admin.occasions.index'],
+            ['key' => 'recommendations', 'label' => 'Mi Aroma Perfecto'],
+            ['key' => 'institutional-content', 'label' => 'Contenido Institucional'],
+            ['key' => 'seo', 'label' => 'SEO'],
+            ['key' => 'settings', 'label' => 'Configuracion'],
+        ],
+    ],
+
     'seo' => [
         'locale' => 'es_CO',
         'theme_color' => '#0b0b0b',

@@ -20,6 +20,11 @@ class Season extends Model
         return ['is_active' => 'boolean'];
     }
 
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     public function perfumes(): BelongsToMany
     {
         return $this->belongsToMany(Perfume::class)->withTimestamps();

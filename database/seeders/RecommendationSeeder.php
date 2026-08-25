@@ -10,8 +10,8 @@ use App\Models\Climate;
 use App\Models\Occasion;
 use App\Models\Question;
 use App\Models\RecommendationRule;
-use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Collection;
 
 class RecommendationSeeder extends Seeder

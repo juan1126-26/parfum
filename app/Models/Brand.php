@@ -31,4 +31,9 @@ class Brand extends Model
     {
         return $this->hasMany(Perfume::class);
     }
+
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
 }

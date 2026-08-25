@@ -178,3 +178,66 @@ if (aromaWizard) {
 
     showStep(0, false);
 }
+
+const adminShell = document.querySelector('[data-admin-shell]');
+const adminSidebarToggle = document.querySelector('[data-admin-sidebar-toggle]');
+const adminSidebar = document.querySelector('#admin-sidebar');
+
+if (adminShell && adminSidebarToggle && adminSidebar) {
+    const mobileAdminNavigation = window.matchMedia('(max-width: 47.99rem)');
+    const collapsePreference = 'parfum-admin-sidebar-collapsed';
+
+    const readPreference = () => {
+        try {
+            return window.localStorage.getItem(collapsePreference) === 'true';
+        } catch {
+            return false;
+        }
+    };
+
+    const writePreference = (collapsed) => {
+        try {
+            window.localStorage.setItem(collapsePreference, String(collapsed));
+        } catch {
+            // Navigation remains functional when storage is unavailable.
+        }
+    };
+
+    const syncAdminNavigation = () => {
+        const isMobile = mobileAdminNavigation.matches;
+        const isCollapsed = !isMobile && readPreference();
+
+        adminShell.classList.toggle('is-sidebar-open', false);
+        adminShell.classList.toggle('is-sidebar-collapsed', isCollapsed);
+        adminSidebar.inert = isMobile;
+        adminSidebarToggle.setAttribute('aria-expanded', String(!isCollapsed && !isMobile));
+    };
+
+    adminSidebarToggle.addEventListener('click', () => {
+        if (mobileAdminNavigation.matches) {
+            const isOpen = adminShell.classList.toggle('is-sidebar-open');
+
+            adminSidebar.inert = !isOpen;
+            adminSidebarToggle.setAttribute('aria-expanded', String(isOpen));
+            return;
+        }
+
+        const isCollapsed = !adminShell.classList.contains('is-sidebar-collapsed');
+
+        adminShell.classList.toggle('is-sidebar-collapsed', isCollapsed);
+        adminSidebarToggle.setAttribute('aria-expanded', String(!isCollapsed));
+        writePreference(isCollapsed);
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && mobileAdminNavigation.matches && adminShell.classList.contains('is-sidebar-open')) {
+            adminShell.classList.remove('is-sidebar-open');
+            adminSidebar.inert = true;
+            adminSidebarToggle.setAttribute('aria-expanded', 'false');
+            adminSidebarToggle.focus();
+        }
+    });
+
+    mobileAdminNavigation.addEventListener('change', syncAdminNavigation);
+    syncAdminNavigation();
+}

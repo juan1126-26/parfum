@@ -29,6 +29,11 @@ class Note extends Model
             ->orderByPivot('sort_order');
     }
 
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     public function scopeActive(Builder $query): void
     {
         $query->where('is_active', true);

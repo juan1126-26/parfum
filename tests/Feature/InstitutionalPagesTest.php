@@ -2,10 +2,13 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class InstitutionalPagesTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function test_about_page_renders_the_editorial_brand_experience(): void
     {
         $this->get(route('about'))

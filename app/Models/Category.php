@@ -32,6 +32,11 @@ class Category extends Model
         return $this->hasMany(Perfume::class);
     }
 
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     public function scopeActive(Builder $query): void
     {
         $query->where('is_active', true);
