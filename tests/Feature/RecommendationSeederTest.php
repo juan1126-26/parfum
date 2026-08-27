@@ -2,9 +2,12 @@
 
 namespace Tests\Feature;
 
+use App\Enums\PerformanceLevel;
 use App\Enums\RecommendationCriterion;
 use App\Models\Accord;
 use App\Models\AnswerOption;
+use App\Models\Climate;
+use App\Models\Occasion;
 use App\Models\Question;
 use App\Models\RecommendationRule;
 use Database\Seeders\ParfumDemoSeeder;
@@ -22,9 +25,14 @@ class RecommendationSeederTest extends TestCase
         $this->seed(RecommendationSeeder::class);
         $this->seed(RecommendationSeeder::class);
 
+        $expectedOptionCount = Accord::query()->active()->count()
+            + Climate::query()->active()->count()
+            + Occasion::query()->active()->count()
+            + (count(PerformanceLevel::cases()) * 3);
+
         $this->assertSame(6, Question::query()->count());
-        $this->assertSame(27, AnswerOption::query()->count());
-        $this->assertSame(27, RecommendationRule::query()->count());
+        $this->assertSame($expectedOptionCount, AnswerOption::query()->count());
+        $this->assertSame($expectedOptionCount, RecommendationRule::query()->count());
 
         $accord = Accord::query()->where('slug', 'dulce')->firstOrFail();
         $option = AnswerOption::query()
