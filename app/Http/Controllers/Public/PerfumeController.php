@@ -82,6 +82,7 @@ class PerfumeController extends Controller
         return [
             'brand',
             'category',
+            'coverImage',
             'accords' => fn (BelongsToMany $query) => $query->active()->orderByPivotDesc('is_primary')->orderByPivot('sort_order'),
         ];
     }

@@ -19,7 +19,7 @@ class HomeController extends Controller
             ->where(function (Builder $query): void {
                 $query->featured()->orWhere('is_best_seller', true);
             })
-            ->with(['brand', 'category'])
+            ->with(['brand', 'category', 'coverImage'])
             ->ordered()
             ->limit(4)
             ->get();

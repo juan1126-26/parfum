@@ -1,11 +1,15 @@
 @props(['perfume'])
 
 <article class="catalog-card catalog-card--{{ $perfume->tone }}" data-reveal>
-    <div class="catalog-card__media" aria-hidden="true">
-        <span class="catalog-card__halo"></span>
-        <span class="catalog-card__bottle"></span>
-        <span class="catalog-card__cap"></span>
-        <span class="catalog-card__shadow"></span>
+    <div class="catalog-card__media" @if (! $perfume->coverImage) aria-hidden="true" @endif>
+        @if ($perfume->coverImage)
+            <img src="{{ asset($perfume->coverImage->path) }}" alt="{{ $perfume->coverImage->alt_text }}" loading="lazy" decoding="async">
+        @else
+            <span class="catalog-card__halo"></span>
+            <span class="catalog-card__bottle"></span>
+            <span class="catalog-card__cap"></span>
+            <span class="catalog-card__shadow"></span>
+        @endif
     </div>
 
     <div class="catalog-card__content">

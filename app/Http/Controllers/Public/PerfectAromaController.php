@@ -38,7 +38,7 @@ class PerfectAromaController extends Controller
 
         (new EloquentCollection($recommendations->pluck('perfume')->all()))->loadMissing([
             'brand',
-            'images' => fn ($query) => $query->where('is_cover', true)->orderBy('sort_order'),
+            'coverImage',
         ]);
 
         return view('public.perfect-aroma', [

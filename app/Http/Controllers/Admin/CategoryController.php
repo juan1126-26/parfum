@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreCategoryRequest;
 use App\Http\Requests\Admin\UpdateCategoryRequest;
 use App\Models\Category;
+use App\Services\AdminCategoryImageService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -40,9 +41,24 @@ class CategoryController extends Controller
         return view('admin.categories.create', $this->formData(new Category(['sort_order' => 0])));
     }
 
-    public function store(StoreCategoryRequest $request): RedirectResponse
+    public function store(StoreCategoryRequest $request, AdminCategoryImageService $imageService): RedirectResponse
     {
-        Category::query()->create($request->validated());
+        $data = $request->validated();
+        unset($data['cover_image']);
+        $coverImage = null;
+
+        if ($request->hasFile('cover_image')) {
+            $coverImage = $imageService->store($request->file('cover_image'));
+            $data['cover_image'] = $coverImage;
+        }
+
+        try {
+            Category::query()->create($data);
+        } catch (\Throwable $exception) {
+            $imageService->delete($coverImage);
+
+            throw $exception;
+        }
 
         return to_route('admin.categories.index')->with('success', 'La categoria fue creada.');
     }
@@ -52,9 +68,29 @@ class CategoryController extends Controller
         return view('admin.categories.edit', $this->formData($category));
     }
 
-    public function update(UpdateCategoryRequest $request, Category $category): RedirectResponse
+    public function update(UpdateCategoryRequest $request, Category $category, AdminCategoryImageService $imageService): RedirectResponse
     {
-        $category->update($request->validated());
+        $data = $request->validated();
+        unset($data['cover_image']);
+        $newCoverImage = null;
+        $previousCoverImage = $category->cover_image;
+
+        if ($request->hasFile('cover_image')) {
+            $newCoverImage = $imageService->store($request->file('cover_image'));
+            $data['cover_image'] = $newCoverImage;
+        }
+
+        try {
+            $category->update($data);
+        } catch (\Throwable $exception) {
+            $imageService->delete($newCoverImage);
+
+            throw $exception;
+        }
+
+        if ($newCoverImage !== null) {
+            $imageService->delete($previousCoverImage);
+        }
 
         return to_route('admin.categories.edit', $category)->with('success', 'Los cambios de la categoria fueron guardados.');
     }

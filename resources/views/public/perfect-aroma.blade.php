@@ -61,7 +61,7 @@
                             @php($perfume = $recommendation['perfume'])
                             <article class="aroma-result" data-reveal>
                                 <div class="aroma-result__media">
-                                    @if($perfume->images->first())<img src="{{ asset($perfume->images->first()->path) }}" alt="{{ $perfume->images->first()->alt_text }}" loading="lazy" decoding="async">@else<div class="aroma-result__placeholder" aria-hidden="true"><span></span><i></i></div>@endif
+                                    @if($perfume->coverImage)<img src="{{ asset($perfume->coverImage->path) }}" alt="{{ $perfume->coverImage->alt_text }}" loading="lazy" decoding="async">@else<div class="aroma-result__placeholder" aria-hidden="true"><span></span><i></i></div>@endif
                                     <div class="aroma-result__affinity"><strong>{{ $recommendation['affinity_percentage'] }}%</strong><span>{{ $recommendation['affinity_level'] }}</span></div>
                                 </div>
                                 <div class="aroma-result__content"><p class="eyebrow">{{ $perfume->brand->name }}</p><h2>{{ $perfume->name }}</h2><p class="aroma-result__reasons">{{ collect($recommendation['reasons'])->join(' - ') }}</p>

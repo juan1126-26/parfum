@@ -18,6 +18,7 @@ abstract class CategoryFormRequest extends FormRequest
             'slug' => ['required', 'string', 'max:255', 'alpha_dash', $this->slugRule()],
             'description' => ['nullable', 'string'],
             'sort_order' => ['required', 'integer', 'min:0', 'max:65535'],
+            'cover_image' => ['nullable', 'file', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
         ];
     }
 

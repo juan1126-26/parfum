@@ -2,8 +2,11 @@
 
 <article class="category-card category-card--{{ $category->tone }}" data-reveal>
     <div class="category-card__media" aria-hidden="true">
-        <span class="category-card__orb"></span>
-        <span class="category-card__vessel"></span>
+        @if ($category->cover_image)
+            <img src="{{ asset('storage/'.$category->cover_image) }}" alt="" loading="lazy" decoding="async">
+        @else
+            <span class="category-card__placeholder"></span>
+        @endif
     </div>
     <div class="category-card__content">
         <h3>{{ $category->name }}</h3>

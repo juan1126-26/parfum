@@ -37,6 +37,7 @@ class CatalogController extends Controller
             ->with([
                 'brand',
                 'category',
+                'coverImage',
                 'accords' => fn (BelongsToMany $query) => $query
                     ->active()
                     ->orderByPivotDesc('is_primary')

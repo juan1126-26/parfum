@@ -1,4 +1,4 @@
-<form class="admin-form" method="POST" action="{{ $action }}">
+<form class="admin-form" method="POST" action="{{ $action }}" enctype="multipart/form-data">
     @csrf
     @if ($method !== 'POST') @method($method) @endif
     <section class="admin-form-section" aria-labelledby="category-details-title">
@@ -8,6 +8,7 @@
             <label>Slug<input name="slug" value="{{ old('slug', $category->slug) }}" required>@error('slug')<small class="admin-field-error">{{ $message }}</small>@enderror</label>
             <label>Orden del catalogo<input name="sort_order" type="number" min="0" max="65535" value="{{ old('sort_order', $category->sort_order) }}" required>@error('sort_order')<small class="admin-field-error">{{ $message }}</small>@enderror</label>
             <label class="admin-form-fields__full">Descripcion<textarea name="description" rows="6">{{ old('description', $category->description) }}</textarea>@error('description')<small class="admin-field-error">{{ $message }}</small>@enderror</label>
+            <label class="admin-form-fields__full">Imagen representativa<input name="cover_image" type="file" accept="image/jpeg,image/png,image/webp">@if ($category->cover_image)<small>La categoría ya tiene una imagen. Selecciona un archivo para reemplazarla.</small>@endif @error('cover_image')<small class="admin-field-error">{{ $message }}</small>@enderror</label>
         </div>
     </section>
     <div class="admin-form__actions">
